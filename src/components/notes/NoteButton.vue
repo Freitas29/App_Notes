@@ -24,6 +24,7 @@ export default {
     bottom: 40px;
     right: 50px;
     background-color: #42b983;
+    box-shadow: 3px 3px 20px 3px #52cc94fa;
     cursor: pointer;
     transition: all 0.4s ease;
 
