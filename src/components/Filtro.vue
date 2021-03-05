@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <input class="filtro" />
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+    .filtro {
+        width: 400px;
+        height: 40px;
+        border-radius: 10px;
+        padding: 10px;
+        border: none;
+        text-decoration: none;
+        outline: none;
+        font-size: 18px;
+        background-color: #EDEDED;
+        color: #CCCCCC;
+    }
+</style>
