@@ -6,16 +6,14 @@
       <NoteDeleteButton />
     </div>
     <div class="note_body">
-      <textarea>
-
-      </textarea>
+      <textarea> </textarea>
     </div>
   </div>
 </template>
 
 <script>
-import NoteSaveButton from '@/components/notes/NoteSaveButton'
-import NoteDeleteButton from '@/components/notes/NoteDeleteButton'
+import NoteSaveButton from "@/components/notes/NoteSaveButton";
+import NoteDeleteButton from "@/components/notes/NoteDeleteButton";
 
 import { Component, Vue } from "vue-property-decorator";
 
@@ -26,9 +24,7 @@ import { Component, Vue } from "vue-property-decorator";
     NoteDeleteButton
   }
 })
-export default class Note extends Vue {
-
-}
+export default class Note extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -38,7 +34,6 @@ export default class Note extends Vue {
   align-content: start;
   padding: 7px;
   grid-template-columns: 1fr;
-
 
   .note_header {
     height: 30px;
@@ -55,8 +50,8 @@ export default class Note extends Vue {
       text-decoration: none;
       outline: none;
       font-size: 18px;
-      background-color: #EDEDED;
-      color: #CCCCCC;
+      background-color: #ededed;
+      color: #cccccc;
       margin-right: 20px;
     }
 
@@ -64,7 +59,6 @@ export default class Note extends Vue {
       margin-left: 10px;
     }
   }
-
 
   .note_body {
     align-self: start;
