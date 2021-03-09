@@ -1,5 +1,5 @@
 <template>
-  <button class="button_create">
+  <button class="button_create" @click="criarNota">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -12,7 +12,16 @@
 </template>
 
 <script>
-export default {};
+import { Component, Vue } from "vue-property-decorator";
+
+@Component({
+  name: "NoteButton"
+})
+export default class NoteButton extends Vue {
+  criarNota() {
+    this.$router.push("/note/");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
