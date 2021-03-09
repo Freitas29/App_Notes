@@ -9,8 +9,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import NoteList from "@/components/notes/NoteList.vue";
-import Filtro from "@/components/Filtro.vue"
-import CreateNoteButton from "@/components/notes/NoteButton.vue"
+import Filtro from "@/components/Filtro.vue";
+import CreateNoteButton from "@/components/notes/NoteButton.vue";
 @Component({
   components: {
     NoteList,
@@ -20,5 +20,4 @@ import CreateNoteButton from "@/components/notes/NoteButton.vue"
 })
 export default class Home extends Vue {}
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

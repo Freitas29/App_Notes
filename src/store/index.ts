@@ -1,14 +1,11 @@
 import Vue from "vue";
-import Vuex, { Store } from "vuex";
-import NotesModule from "./modules/notes/index";
-
-import Notes from "./modules/notes/index"
-import { IInitialStateNote } from './modules/notes/types'
+import Vuex from "vuex";
+import Notes, { DashboardInitialState } from "./modules/notes/index";
 
 Vue.use(Vuex);
 
 export interface RootState {
-  notes?: IInitialStateNote
+  notes?: DashboardInitialState;
 }
 
 export default new Vuex.Store<RootState>({
@@ -18,6 +15,4 @@ export default new Vuex.Store<RootState>({
       ...Notes
     }
   }
-})
-
-
+});
