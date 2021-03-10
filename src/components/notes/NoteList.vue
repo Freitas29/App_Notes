@@ -1,14 +1,15 @@
 <template>
   <div class="list">
-    <div class="item">
-      <NoteItem />
+    <div class="item" v-for="note in notes" :key="note.id">
+      <NoteItem :title="note.title" :description="note.description" />
     </div>
   </div>
 </template>
 
-<script>
-import { Component, Vue } from "vue-property-decorator";
-import NoteItem from "./NoteItem";
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import NoteItem from "./NoteItem.vue";
+import { INote } from "@/store/modules/notes/types";
 
 @Component({
   name: "NoteList",
@@ -16,7 +17,10 @@ import NoteItem from "./NoteItem";
     NoteItem
   }
 })
-export default class NoteList extends Vue {}
+export default class NoteList extends Vue {
+  @Prop({ default: () => [] })
+  notes!: INote[];
+}
 </script>
 
 <style lang="scss" scoped>

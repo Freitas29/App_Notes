@@ -1,18 +1,31 @@
 <template>
   <div class="note_item">
     <div class="note_item_header">
-      <label><strong>Nome do item</strong></label>
+      <label>
+        <strong>{{ title }}</strong>
+      </label>
     </div>
     <div class="note_item_body">
       <p>
-        Testando o conteudo
+        {{ description }}
       </p>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+import { Vue, Prop, Component } from "vue-property-decorator";
+
+@Component({
+  name: "NoteItem"
+})
+export default class NoteItem extends Vue {
+  @Prop({ required: true, type: String })
+  title!: string;
+
+  @Prop({ required: true, type: String })
+  description!: string;
+}
 </script>
 
 <style lang="scss" scoped>

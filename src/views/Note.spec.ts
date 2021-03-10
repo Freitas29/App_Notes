@@ -12,7 +12,8 @@ const localVue = createLocalVue()
 
 localVue.use(Vuex)
 localVue.use(VueRouter)
-const router = new VueRouter({ });
+const router = new VueRouter();
+router.push("/note")
 let mutations = {
     [MutationsNotes.ATUALIZAR_CURRENT_NOTE]: jest.fn(),
     [MutationsNotes.ATUALIZAR_LISTA_NOTAS]: jest.fn()

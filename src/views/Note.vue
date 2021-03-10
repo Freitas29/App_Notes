@@ -14,9 +14,9 @@
 <script lang="ts">
 import NoteSaveButton from "@/components/notes/NoteSaveButton.vue";
 import NoteDeleteButton from "@/components/notes/NoteDeleteButton.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Vue } from "vue-property-decorator";
 import { createNamespacedHelpers } from "vuex";
-import { IInitialStateNote, INote } from "@/store/modules/notes/types";
+import { INote } from "@/store/modules/notes/types";
 import {
   MutationsNotes,
   ActionsNotes
@@ -28,61 +28,71 @@ interface MapState {
   noteDescription: () => string;
 }
 
-@Component({
+type Actions = {
+  [ActionsNotes.SALVAR_NOTA]: (payload: INote) => void;
+};
+
+type Mutations = {
+  [MutationsNotes.ATUALIZAR_CURRENT_NOTE]: (payload: INote) => void;
+};
+
+type Methods = Actions &
+  Mutations & {
+    salvarNota: () => void;
+  };
+
+type State = {
+  currentNote: INote;
+};
+
+type Computed = State & {
+  title: string;
+  description: string;
+};
+
+export default Vue.extend<{}, Methods, Computed>({
   name: "Note",
   components: {
     NoteSaveButton,
     NoteDeleteButton
   },
   computed: {
-    ...mapState<MapState>({
-      noteTitle: (state: IInitialStateNote) => state.currentNote.title,
-      noteDescription: (state: IInitialStateNote) =>
-        state.currentNote.description
-    })
+    ...mapState(["currentNote"]),
+    title: {
+      get() {
+        return this.currentNote.title;
+      },
+      set(title) {
+        this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
+          title,
+          description: this.description
+        });
+      }
+    },
+    description: {
+      get(): string {
+        return this.currentNote.description;
+      },
+      set(description: string) {
+        this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
+          title: this.title,
+          description
+        });
+      }
+    }
   },
   methods: {
     ...mapMutations([MutationsNotes.ATUALIZAR_CURRENT_NOTE]),
-    ...mapActions([ActionsNotes.SALVAR_NOTA])
+    ...mapActions([ActionsNotes.SALVAR_NOTA]),
+    salvarNota() {
+      this[ActionsNotes.SALVAR_NOTA]({
+        title: this.title,
+        description: this.description
+      });
+      this.$router.push("/");
+    }
   }
-})
-export default class Note extends Vue {
-  [MutationsNotes.ATUALIZAR_CURRENT_NOTE]: (payload: INote) => void;
-  [ActionsNotes.SALVAR_NOTA]: (payload: INote) => void;
-  noteTitle!: string;
-  noteDescription!: string;
-
-  public get title(): string {
-    return this.noteTitle;
-  }
-
-  public set title(title: string) {
-    this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
-      title,
-      description: this.description
-    });
-  }
-
-  public get description() {
-    return this.noteDescription;
-  }
-
-  public set description(description: string) {
-    this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
-      title: this.title,
-      description
-    });
-  }
-
-  salvarNota() {
-    this[ActionsNotes.SALVAR_NOTA]({
-      title: this.title,
-      description: this.description
-    });
-
-    this.$router.push("/");
-  }
-}
+});
 </script>
 
 <style lang="scss" scoped>
