@@ -41,5 +41,9 @@ describe("Actions note module", () => {
     ];
 
     expect(store.state.notes?.notes).toEqual(expected);
+    expect(store.state.notes?.currentNote).toEqual({
+      title: "",
+      description: ""
+    })
   });
 });

@@ -1,5 +1,5 @@
 <template>
-  <button class="button_create">
+  <button class="button_create" @click="$emit('handleSaveButton')">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="12"

@@ -52,6 +52,10 @@ export const actions: ActionTree<IInitialStateNote, RootState> & Actions = {
     ];
 
     commit(MutationsNotes.ATUALIZAR_LISTA_NOTAS, novaListaDeNotas);
+    commit(MutationsNotes.ATUALIZAR_CURRENT_NOTE, {
+      title: "",
+      description: ""
+    })
   }
 };
 

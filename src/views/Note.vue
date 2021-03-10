@@ -1,30 +1,88 @@
 <template>
   <div class="note">
     <div class="note_header">
-      <input />
-      <NoteSaveButton />
+      <input v-model="title" />
+      <NoteSaveButton @handleSaveButton="salvarNota" />
       <NoteDeleteButton />
     </div>
     <div class="note_body">
-      <textarea> </textarea>
+      <textarea v-model="description" />
     </div>
   </div>
 </template>
 
-<script>
-import NoteSaveButton from "@/components/notes/NoteSaveButton";
-import NoteDeleteButton from "@/components/notes/NoteDeleteButton";
-
+<script lang="ts">
+import NoteSaveButton from "@/components/notes/NoteSaveButton.vue";
+import NoteDeleteButton from "@/components/notes/NoteDeleteButton.vue";
 import { Component, Vue } from "vue-property-decorator";
+import { createNamespacedHelpers } from "vuex";
+import { IInitialStateNote, INote } from "@/store/modules/notes/types";
+import {
+  MutationsNotes,
+  ActionsNotes
+} from "@/store/modules/notes/dashboardEnum";
+const { mapMutations, mapState, mapActions } = createNamespacedHelpers("notes");
+
+interface MapState {
+  noteTitle: () => string;
+  noteDescription: () => string;
+}
 
 @Component({
   name: "Note",
   components: {
     NoteSaveButton,
     NoteDeleteButton
+  },
+  computed: {
+    ...mapState<MapState>({
+      noteTitle: (state: IInitialStateNote) => state.currentNote.title,
+      noteDescription: (state: IInitialStateNote) =>
+        state.currentNote.description
+    })
+  },
+  methods: {
+    ...mapMutations([MutationsNotes.ATUALIZAR_CURRENT_NOTE]),
+    ...mapActions([ActionsNotes.SALVAR_NOTA])
   }
 })
-export default class Note extends Vue {}
+export default class Note extends Vue {
+  [MutationsNotes.ATUALIZAR_CURRENT_NOTE]: (payload: INote) => void;
+  [ActionsNotes.SALVAR_NOTA]: (payload: INote) => void;
+  noteTitle!: string;
+  noteDescription!: string;
+
+  public get title(): string {
+    return this.noteTitle;
+  }
+
+  public set title(title: string) {
+    this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
+      title,
+      description: this.description
+    });
+  }
+
+  public get description() {
+    return this.noteDescription;
+  }
+
+  public set description(description: string) {
+    this[MutationsNotes.ATUALIZAR_CURRENT_NOTE]({
+      title: this.title,
+      description
+    });
+  }
+
+  salvarNota() {
+    this[ActionsNotes.SALVAR_NOTA]({
+      title: this.title,
+      description: this.description
+    });
+
+    this.$router.push("/");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
